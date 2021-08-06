@@ -45,16 +45,17 @@ namespace GeneralConcepts.Generics
             var car1 = new Car()
             {
                 OwnerName = "Pepito",
-                type = CarType.Ferrary
+                Type = CarType.Ferrary,
+                Color = ColorTypes.White
             };
 
             var car2 = new Car() 
             {
                 OwnerAge = 34,
-                type = CarType.Ferrary
+                Type = CarType.Ferrary
             };
 
-            if (car2.type == CarType.Mustang)
+            if (car2.Type == CarType.Mustang)
             {
 
             }

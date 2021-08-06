@@ -64,6 +64,7 @@ namespace GeneralConcepts
 
         public string OwnerName { get; set; }
         public int OwnerAge { get; set; }
-        public CarType type { get; set; }
+        public CarType Type { get; set; }
+        public ColorTypes Color { get; set; }
     }
 }
