@@ -18,14 +18,21 @@ namespace GeneralConcepts.DelegatesAndLambdas
             action(qa, "Peter", 22);
 
             // func for return methods
-            Func<Employee, string, int, string> func = populateAndShowEmployee;
+            Func<Employee, string, int, (string,int)> func = populateAndShowEmployee;
              var info = func(qa, "Tony", 23);
 
             ////Lambda expresion
-            ///
+
+            Func<string, string> toUpper = (input)  =>
+            {
+                input.Replace('k', 's');
+                return input.ToUpper();
+            };
+
+            var nameToUpper = toUpper("kilyam");
             // (intput - parameter) => {  expresiones;
-           //  expresion;
-           //   return something;}
+            //  expresion;
+            //   return something;}
             //(input - parameters) =>  expression 
 
             Func<Employee, string, int,string> lambdaAction = (employee, name, age) => {
@@ -50,11 +57,11 @@ namespace GeneralConcepts.DelegatesAndLambdas
             var devInfo = lambdaFunc(dev, "Stan", 65);
         }
 
-        public static string populateAndShowEmployee(Employee employee, string name, int age)
+        public static (string, int) populateAndShowEmployee(Employee employee, string name, int age)
         {
             employee.Name = name;
             employee.Age = age;
-            return $"{employee.GetInfo()} and {employee.Skill()}";
+            return ($"{employee.GetInfo()} and {employee.Skill()}" ,1);
         }
 
 

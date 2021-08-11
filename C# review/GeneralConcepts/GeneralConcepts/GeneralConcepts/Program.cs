@@ -25,10 +25,10 @@ namespace GeneralConcepts
             */
 
             //generics demo
-            Generics.Tester.Test();
+            //Generics.Tester.Test();
 
             //Delegates and lambdas demo
-            //GeneralConcepts.DelegatesAndLambdas.Tester.Test();
+            GeneralConcepts.DelegatesAndLambdas.Tester.Test();
 
             //Linq demo
             //GeneralConcepts.Linq.Tester.Test(); 

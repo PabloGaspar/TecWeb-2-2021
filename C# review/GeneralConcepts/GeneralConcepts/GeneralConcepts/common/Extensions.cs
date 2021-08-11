@@ -6,9 +6,9 @@ namespace GeneralConcepts.common
 {
     static class Extensions
     {
-        public static void SayHi(this Car car)
+        public static void SayHi(this Car car, string sound)
         {
-            Console.WriteLine($"hi im ammmmmmmm carr  {car.OwnerName}");
+            Console.WriteLine($"hi im ammmmmmmm carr  {car.OwnerName} - {sound}");
         }
     }
 }

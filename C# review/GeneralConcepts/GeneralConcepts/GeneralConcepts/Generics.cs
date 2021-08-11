@@ -20,7 +20,7 @@ namespace GeneralConcepts.Generics
     //Delegates
     //Operator
 
-    public class MyGenericArray<T> //where T :  Employee  //-> constrains
+    public class MyGenericArray<T>  //where T :  Employee, new()  //-> constrains
     {
         private T[] array;
 
@@ -38,11 +38,12 @@ namespace GeneralConcepts.Generics
             //value.Skill();
         }
     }
+
     public static class Tester
     {
         public static void Test()
         {
-            var car1 = new Car()
+            var car1 = new Car
             {
                 OwnerName = "Pepito",
                 Type = CarType.Ferrary,
@@ -62,7 +63,8 @@ namespace GeneralConcepts.Generics
 
             Car car = new Car() {OwnerName = "autito",OwnerAge = 11 };
 
-            car.SayHi();
+
+            car.SayHi("Brrrrr");
 
             //declaring an int array
             var intArray = new MyGenericArray<int>(5);
@@ -90,7 +92,7 @@ namespace GeneralConcepts.Generics
                 Age = 55
             });
 
-            devArray.setItem(1, new Developer()
+            devArray.setItem(1, new QA()
             {
                 Name = "Alam",
                 Age = 11
@@ -123,7 +125,7 @@ namespace GeneralConcepts.Generics
             
         }
 
-        static void Swap<T>( ref T lhs, ref T rhs) 
+        static void Swap<T>(ref  T lhs, ref T rhs)
         {
             T temp;
             temp = lhs;

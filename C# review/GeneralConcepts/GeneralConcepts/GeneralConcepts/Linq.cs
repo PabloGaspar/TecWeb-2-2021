@@ -73,7 +73,7 @@ namespace GeneralConcepts.Linq
                     {
                         OwnerName = e.Name,
                         OwnerAge = e.Age,
-                        type = e.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
+                        Type = e.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
                     };
                 });
 
@@ -97,7 +97,7 @@ namespace GeneralConcepts.Linq
                     {
                         OwnerName = e.Name,
                         OwnerAge = e.Age,
-                        type = e.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
+                        Type = e.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
                     };
                 });
 
@@ -111,7 +111,7 @@ namespace GeneralConcepts.Linq
                                      {
                                          OwnerName = element.Name,
                                          OwnerAge = element.Age,
-                                         type = element.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
+                                         Type = element.Age < 30 ? CarType.Ferrary : CarType.Escarabajo
                                      };
 
 
