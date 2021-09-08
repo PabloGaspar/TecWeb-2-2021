@@ -9,7 +9,7 @@ namespace GeneralConcepts.Linq
         public static void Test()
         {
             //IEnumerable
-
+            
             var testList = new List<Employee>();
             testList.Add(new Developer
             {
@@ -22,6 +22,7 @@ namespace GeneralConcepts.Linq
                 Age = 13,
                 Name = "Careu"
             });
+
 
             foreach (var item in testList)
             {
@@ -44,16 +45,18 @@ namespace GeneralConcepts.Linq
 
 
             //Linq
-            var devsToWork = PopulateDevelopers();
+            List<Developer> devsToWork = PopulateDevelopers();
+
+            var devsOlderThan30 = devsToWork.Where(d => d.Age > 30);
 
             //Func<TSource, bool>
-            var newList = devsToWork.Where((Developer developer) => {return developer.Age > 50; }); 
+            var newList = devsToWork.Where(( developer) => {return developer.Age > 50; }); 
             //Filtering 
             var lessThan30 = devsToWork.Where((e) =>  e.Age < 30); //&& e.something == 2
             var anas = devsToWork.Where(d => d.Name == "Ana");
 
             //First
-            var firstNameD = devsToWork.FirstOrDefault(e => e.Name.StartsWith("D"))?? new Developer();
+            var firstNameD = devsToWork.FirstOrDefault(e => e.Name.StartsWith("D"))?? new Developer() { Name = "default employee"} ;
             var firstNameW = devsToWork.FirstOrDefault(e => e.Name.StartsWith("W")) ?? new Developer();
             var firstNameD2 = devsToWork.SingleOrDefault(e => e.Id == 2);
 
@@ -64,6 +67,13 @@ namespace GeneralConcepts.Linq
                                        where element.Age > 22
                                        orderby element.Name descending
                                        select new Car() { OwnerName = element.Name };
+
+
+
+            var listNames = new List<string>() { "Maria", "pepe", "pedro", "sebastian" };
+
+            var size = listNames.Count;
+            var nameLenght = listNames.Select(e => { return e.Length; });
 
             //Projection Selecting 
             var carProjection = devsToWork
@@ -80,10 +90,7 @@ namespace GeneralConcepts.Linq
             var age = 12;
      
 
-            var listNames = new List<string>() { "Maria", "pepe", "pedro", "sebastian" };
-
-            var size = listNames.Count;
-            var nameLenght = listNames.Select(e => {return  e.Length;});
+        
 
 
             var carProjectionSame = devsToWork

@@ -8,6 +8,7 @@ namespace AdvancedConcepts
     {
         public static void Test()
         {
+            
             try
             {
                 SomeMethod();
@@ -22,13 +23,14 @@ namespace AdvancedConcepts
 
                 throw;
             }
-
+            // SQLExeption -> DatabaseExeption -> Exception
+            // BadAgeException -> Exception
             int x = 0;
             try
             {
-                object myObject = null;
+                object myObject = new object();
                 myObject.ToString();
-                throw new Exception("soemthing happend");
+                //throw new Exception("soemthing happend");
                 int y = 100 / x;
             }
             catch (ArithmeticException e)
@@ -73,7 +75,7 @@ namespace AdvancedConcepts
         {
             int i = 10;
             /***********do stuff here**/
-            throw new InvalidOperationException();
+            throw new MyException(){ additionalIndormation = "erro", erroType = ErroType.Critical};
         }
     }
 

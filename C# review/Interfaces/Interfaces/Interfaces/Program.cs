@@ -7,6 +7,8 @@ namespace Interfaces
         static void Main(string[] args)
         {
             decimal amountToShop = 400;
+
+    
             CreditCardFactory.type = CreditCardType.MasterCard;
             ICreditCard MCCreditCard = CreditCardFactory.Create();
             MCCreditCard.Owner = "jhon";

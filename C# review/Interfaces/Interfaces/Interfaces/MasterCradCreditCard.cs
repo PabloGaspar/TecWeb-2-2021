@@ -28,7 +28,7 @@ namespace Interfaces
         {
             decimal interestFactor;
 
-            if (maxAmount > 1000)
+            if (maxAmount > 500)
             {
                 interestFactor = 0.10m;
             }

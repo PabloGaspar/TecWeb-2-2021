@@ -66,5 +66,10 @@ namespace GeneralConcepts
         public int OwnerAge { get; set; }
         public CarType Type { get; set; }
         public ColorTypes Color { get; set; }
+
+        public void SayBy(string sound)
+        {
+            Console.WriteLine($"bye {this.OwnerName} - {sound}" );
+        }
     }
 }

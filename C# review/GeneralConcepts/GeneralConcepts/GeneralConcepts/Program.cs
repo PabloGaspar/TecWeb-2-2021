@@ -28,10 +28,10 @@ namespace GeneralConcepts
             //Generics.Tester.Test();
 
             //Delegates and lambdas demo
-            GeneralConcepts.DelegatesAndLambdas.Tester.Test();
+            //GeneralConcepts.DelegatesAndLambdas.Tester.Test();
 
             //Linq demo
-            //GeneralConcepts.Linq.Tester.Test(); 
+            GeneralConcepts.Linq.Tester.Test(); 
 
             var poco = new POCO();
 

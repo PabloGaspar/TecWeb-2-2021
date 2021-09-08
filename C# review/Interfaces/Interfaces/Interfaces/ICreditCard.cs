@@ -9,7 +9,7 @@ namespace Interfaces
         string Owner { get; set; }
         decimal MaxAmount { get; set; }
 
-        string GetBrand(); 
+        string GetBrand();
         CardHolderInfo GetHolderInformation();
         decimal CalculateInterest(decimal amount);
     }

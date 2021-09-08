@@ -35,7 +35,7 @@ namespace GeneralConcepts.DelegatesAndLambdas
             //   return something;}
             //(input - parameters) =>  expression 
 
-            Func<Employee, string, int,string> lambdaAction = (employee, name, age) => {
+            Func<Employee, string, int, string> lambdaAction = (employee, name, age) => {
                 employee.Name = name;
                 employee.Age = age;
                 return "SSSSSW";

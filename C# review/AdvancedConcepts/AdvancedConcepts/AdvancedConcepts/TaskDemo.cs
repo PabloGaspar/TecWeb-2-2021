@@ -22,6 +22,7 @@ namespace AdvancedConcepts
 
         public static void TestTaskBasics()
         {
+           
             Action<object> action = (object param) =>
             {
                 //only recives object needs casting 
@@ -38,7 +39,7 @@ namespace AdvancedConcepts
 
             Console.WriteLine("After task 1 was runned");
 
-            Console.ReadLine();
+            //Console.ReadLine();
 
             // Construct a started task
             Task t2 = Task.Factory.StartNew(action, "parameter 2");
@@ -58,6 +59,7 @@ namespace AdvancedConcepts
                 // Just loop.
                 int max = 1000000;
                 int ctr = 0;
+                Thread.Sleep(3000);
                 for (ctr = 0; ctr <= max; ctr++)
                 {
 
@@ -80,20 +82,21 @@ namespace AdvancedConcepts
             Console.WriteLine("Finished {0:N0} iterations.", taskWithResult.Result);
         }
 
-        public async static Task TestChef()
+        public static async Task TestChef()
         {
             Console.Clear();
 
             var chef = new Chef();
 
-            var chickenAsyncTask = chef.PutChickenInTheOvenAsync();
+            var chickenTask = chef.PutChickenInTheOvenAsync();
          
             Thread.Sleep(1000);
 
             var salad = chef.PrepareSalad();
             Console.WriteLine($"{salad} : is ready");
 
-            var chicken = await chickenAsyncTask;
+            var chicken = chickenTask.Result;
+
             Console.WriteLine($"{chicken} : is ready");
 
             Console.WriteLine($"your dish with {chicken} and {salad} is ready");
@@ -121,28 +124,23 @@ namespace AdvancedConcepts
     {
         public async Task<string> PutChickenInTheOvenAsync()
         {
-            var chikenTask = Task.Run(()=> {
-                Console.WriteLine("putting the chicken in the oven");
-                Thread.Sleep(30000);
-                Console.WriteLine("getting the chicken from the oven");
-                //return  "fried chicken"
-            });
+            var ovenTask = Task<string>.Run(() => 
+                {
+                    Console.WriteLine("putting the chicken in the oven");
+                    Thread.Sleep(10000);
+                    Console.WriteLine("getting the chicken from the oven");
+                    return "fried chicken";
+                });
 
-
-            /*
-             * var chicken = await chikenTask;
-             * return chicken;
-             */
-            await chikenTask;
-
-            //mucho codigo  ........
-            return "fried chicken";
+            var result = await  ovenTask;
+            return result;
+         
         }
 
         public string PrepareSalad()
         {
             Console.WriteLine("starting slicing salad");
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
             Console.WriteLine("finished salad");
             return "a healty salad";
         }

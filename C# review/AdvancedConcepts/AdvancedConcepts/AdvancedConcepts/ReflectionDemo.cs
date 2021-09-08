@@ -30,7 +30,7 @@ namespace AdvancedConcepts
             System.Console.WriteLine(type);
 
             // Using Reflection to get information of an Assembly:  
-            System.Reflection.Assembly info = typeof(System.Int32).Assembly;
+            System.Reflection.Assembly info = typeof(Developer).Assembly;
             System.Console.WriteLine(info);
 
             //Get Type
