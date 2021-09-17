@@ -8,11 +8,11 @@ namespace RestaurantAPI.Services
 {
     public interface IRestaurantService
     {
-        IEnumerable<RestaurantModel> GetRestaurants();
-        RestaurantModel GetRestaurant(int restaurantId);
+        IEnumerable<RestaurantModel> GetRestaurants(string orderBy);
+        ResponseModel<RestaurantModel> GetRestaurant(int restaurantId);
         RestaurantModel CreateRestaurant(RestaurantModel restaurant);
         RestaurantModel UpdateRestaurant(int restaurantId, RestaurantModel restaurant);
-        bool DeleteRestaurant(int restaurantId);
+        void DeleteRestaurant(int restaurantId);
 
     }
 }

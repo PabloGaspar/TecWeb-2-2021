@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using RestaurantAPI.Exceptions;
 using RestaurantAPI.Models;
 using RestaurantAPI.Services;
 using System;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantAPI.Controllers
 {
-    [Route("api/restaurants")]
+    [Route("api/[controller]")]
     public class RestaurantsController : Controller
     {
         private IRestaurantService _restaurantService;
@@ -19,37 +21,120 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<RestaurantModel> GetRestaurants()
+        public ActionResult<IEnumerable<RestaurantModel>> GetRestaurants(string direction, string orderBy = "Id")
         {
-            var restaurants = _restaurantService.GetRestaurants();
-            return restaurants;
+            try
+            {
+                               var restaurants = _restaurantService.GetRestaurants(orderBy);
+                return Ok(restaurants);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch(InvalidElementOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+            }
         }
 
         [HttpGet("{id:int}")]
-        public RestaurantModel GetRestaurant(int id)
+        public ActionResult<RestaurantModel> GetRestaurant(int id)
         {
-            var restaurant = _restaurantService.GetRestaurant(id);
-            return restaurant;
+            try
+            {
+                var restaurantResponse = _restaurantService.GetRestaurant(id);
+                if (!restaurantResponse.isSuccess)
+                {
+                    if (restaurantResponse.ErrorType == ErrorResponseType.NotFound)
+                    {
+                        return NotFound(string.Join(',', restaurantResponse.Errors));
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+
+
+                    /*.......*/
+                }
+                else
+                {
+                    return Ok(restaurantResponse.Value);
+                }
+            }
+           
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
         }
 
         [HttpPost]
-        public RestaurantModel PostRestaurant([FromBody] RestaurantModel restaurant)
+        public ActionResult<RestaurantModel> PostRestaurant([FromBody] RestaurantModel restaurant)
         {
-            var newRestaurant = _restaurantService.CreateRestaurant(restaurant);
-            return newRestaurant;
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var newRestaurant = _restaurantService.CreateRestaurant(restaurant);
+                return Created($"/api/restaurants/{newRestaurant.Id}", newRestaurant);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+            }
         }
 
         [HttpDelete("{restaurantId:int}")]
-        public bool DeleteRestaurant(int restaurantId)
+        public ActionResult DeleteRestaurant(int restaurantId)
         {
-            return _restaurantService.DeleteRestaurant(restaurantId);
+            try
+            {
+                _restaurantService.DeleteRestaurant(restaurantId);
+                return Ok();
+            }
+            catch(NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+            } 
         }
 
         [HttpPut("{restaurantId:int}")]
-        public RestaurantModel PutRestant(int restaurantId, [FromBody] RestaurantModel restaurant)
+        public ActionResult<RestaurantModel> PutRestant(int restaurantId, [FromBody] RestaurantModel restaurant)
         {
-            var updatedRestaurant = _restaurantService.UpdateRestaurant(restaurantId, restaurant);
-            return updatedRestaurant;
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    if (restaurant.Address != null && ModelState.ContainsKey("address") &&  ModelState["address"].Errors.Count > 0)
+                    {
+                        return BadRequest(ModelState["address"].Errors);
+                    }
+                }
+                 
+
+                var updatedRestaurant = _restaurantService.UpdateRestaurant(restaurantId, restaurant);
+                return Ok(updatedRestaurant);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+            }
         }
     }
 }
