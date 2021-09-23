@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestaurantAPI.Data.Repository;
 using RestaurantAPI.Services;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ namespace RestaurantAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IRestaurantService, RestaurantService>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddSingleton<IRestaurantRepository, RestaurantRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

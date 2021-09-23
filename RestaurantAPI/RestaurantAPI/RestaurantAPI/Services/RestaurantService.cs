@@ -1,4 +1,5 @@
-﻿using RestaurantAPI.Exceptions;
+﻿using RestaurantAPI.Data.Repository;
+using RestaurantAPI.Exceptions;
 using RestaurantAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -9,39 +10,21 @@ namespace RestaurantAPI.Services
 {
     public class RestaurantService : IRestaurantService
     {
-        private IList<RestaurantModel> _restaurants;
 
+        private IRestaurantRepository _restaurantRepository;
+
+        public RestaurantService(IRestaurantRepository restaurantRepository)
+        {
+            _restaurantRepository = restaurantRepository;
+        }
 
         private HashSet<string> _allowedSortValues = new HashSet<string> { "id", "name", "address" };
-        public RestaurantService()
-        {
-            _restaurants = new List<RestaurantModel>();
-            _restaurants.Add(new RestaurantModel()
-            {
-                Id = 1,
-                Name = "Panchita",
-                Address = "La Cancha",
-                Phone = "6665555444",
-                Founded = new DateTime(1991, 8, 12)
-            });
-
-            _restaurants.Add(new RestaurantModel()
-            {
-                Id = 2,
-                Name = "Overtime",
-                Address = "Prado",
-                Phone = "666555111",
-                Founded = new DateTime(2001, 9, 10)
-            });
-        }
+        
 
         public RestaurantModel CreateRestaurant(RestaurantModel restaurant)
         {
             
-            var lastRestaurant = _restaurants.OrderByDescending(r => r.Id).FirstOrDefault();
-            int nextId = lastRestaurant != null? lastRestaurant.Id + 1 : 1;
-            restaurant.Id = nextId;
-            _restaurants.Add(restaurant);
+            
             return restaurant;
         }
 
