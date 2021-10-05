@@ -1,7 +1,8 @@
 ﻿using GeneralConcepts.common;
 using GeneralConcepts.Folder2;
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneralConcepts
 {
@@ -30,6 +31,16 @@ namespace GeneralConcepts
             //Delegates and lambdas demo
             //GeneralConcepts.DelegatesAndLambdas.Tester.Test();
 
+            var employees = new List<Employee>();
+  
+
+            var result = employees
+                    .Select(category => category.Name)
+                    .DefaultIfEmpty("")
+                    .Aggregate((acc, val) => (string.IsNullOrWhiteSpace(val) || string.IsNullOrEmpty(val)?acc : $"{acc}, {val}"));
+
+
+            
             //Linq demo
             GeneralConcepts.Linq.Tester.Test(); 
 

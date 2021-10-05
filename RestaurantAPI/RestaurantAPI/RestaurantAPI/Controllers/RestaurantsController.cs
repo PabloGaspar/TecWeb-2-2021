@@ -21,11 +21,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<RestaurantModel>> GetRestaurants(string direction, string orderBy = "Id")
+        public async Task<ActionResult<IEnumerable<RestaurantModel>>> GetRestaurantsAsync(string direction, string orderBy = "Id")
         {
             try
             {
-                               var restaurants = _restaurantService.GetRestaurants(orderBy);
+                var restaurants = await _restaurantService.GetRestaurantsAsync(orderBy);
                 return Ok(restaurants);
             }
             catch (NotFoundElementException ex)
@@ -43,28 +43,21 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<RestaurantModel> GetRestaurant(int id)
+        public async Task<ActionResult<RestaurantModel>> GetRestaurantAsync(int id, string showDishes)
         {
             try
             {
-                var restaurantResponse = _restaurantService.GetRestaurant(id);
-                if (!restaurantResponse.isSuccess)
-                {
-                    if (restaurantResponse.ErrorType == ErrorResponseType.NotFound)
-                    {
-                        return NotFound(string.Join(',', restaurantResponse.Errors));
-                    }
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+                bool showDishesBool;
+                if (!Boolean.TryParse(showDishes, out showDishesBool))
+                    showDishesBool = false;
 
-
-                    /*.......*/
-                }
-                else
-                {
-                    return Ok(restaurantResponse.Value);
-                }
+                var restaurant = await _restaurantService.GetRestaurantAsync(id, showDishesBool);
+                return Ok(restaurant);
             }
-           
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
@@ -72,14 +65,14 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<RestaurantModel> PostRestaurant([FromBody] RestaurantModel restaurant)
+        public async Task<ActionResult<RestaurantModel>> PostRestaurantAsync([FromBody] RestaurantModel restaurant)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var newRestaurant = _restaurantService.CreateRestaurant(restaurant);
+                var newRestaurant = await _restaurantService.CreateRestaurantAsync(restaurant);
                 return Created($"/api/restaurants/{newRestaurant.Id}", newRestaurant);
             }
             catch (NotFoundElementException ex)
@@ -93,11 +86,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpDelete("{restaurantId:int}")]
-        public ActionResult DeleteRestaurant(int restaurantId)
+        public async Task<ActionResult> DeleteRestaurantAsync(int restaurantId)
         {
             try
             {
-                _restaurantService.DeleteRestaurant(restaurantId);
+                await _restaurantService.DeleteRestaurantAsync(restaurantId);
                 return Ok();
             }
             catch(NotFoundElementException ex)
@@ -111,7 +104,7 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPut("{restaurantId:int}")]
-        public ActionResult<RestaurantModel> PutRestant(int restaurantId, [FromBody] RestaurantModel restaurant)
+        public async Task<ActionResult<RestaurantModel>> PutRestantAsync(int restaurantId, [FromBody] RestaurantModel restaurant)
         {
             try
             {
@@ -124,7 +117,7 @@ namespace RestaurantAPI.Controllers
                 }
                  
 
-                var updatedRestaurant = _restaurantService.UpdateRestaurant(restaurantId, restaurant);
+                var updatedRestaurant = await _restaurantService.UpdateRestaurantAsync(restaurantId, restaurant);
                 return Ok(updatedRestaurant);
             }
             catch (NotFoundElementException ex)

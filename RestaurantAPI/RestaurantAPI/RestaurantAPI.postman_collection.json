@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/restaurants?orderby=name&direction=desc&other=other",
+					"raw": "{{host}}/api/restaurants?orderby=name",
 					"host": [
 						"{{host}}"
 					],
@@ -23,14 +23,6 @@
 						{
 							"key": "orderby",
 							"value": "name"
-						},
-						{
-							"key": "direction",
-							"value": "desc"
-						},
-						{
-							"key": "other",
-							"value": "other"
 						}
 					]
 				}
@@ -43,14 +35,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/restaurants/22222",
+					"raw": "{{host}}/api/restaurants/1?showDishes=true",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"restaurants",
-						"22222"
+						"1"
+					],
+					"query": [
+						{
+							"key": "showDishes",
+							"value": "true"
+						}
 					]
 				}
 			},
@@ -63,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Cotsolizzi\",\r\n    \"address\": \"pando\",\r\n    \"phone\": \"aaa\",\r\n    \"founded\": \"2005-09-10\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Panchita\",\r\n    \"address\": \"Av America\",\r\n    \"phone\": \"5555-4444\",\r\n    \"founded\": \"2001-09-10\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,14 +87,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/restaurants/55",
+					"raw": "{{host}}/api/restaurants/3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"restaurants",
-						"55"
+						"3"
 					]
 				}
 			},
@@ -105,11 +103,11 @@
 		{
 			"name": "UpdateRestaurant",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \r\n\r\n    \"address\": \"Prado al medio sd asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\"\r\n\r\n}",
+					"raw": "{\r\n  \r\n    \"name\": \"Doña Panchitaaaaaaa\"\r\n   \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,6 +123,127 @@
 						"api",
 						"restaurants",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/restaurants/2/dishes/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"2",
+						"dishes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDishes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/restaurants/1/dishes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"1",
+						"dishes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDish",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Cheese Pizza\",\r\n    \"price\": 15.30,\r\n    \"canBeDelivered\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/restaurants/1/dishes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"1",
+						"dishes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteDish",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/restaurants/1/dishes/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"1",
+						"dishes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDish",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n\r\n        \"name\": \"Panchicono\",\r\n        \"price\": 35.50,\r\n        \"canBeDelivered\": true\r\n\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/restaurants/1/dishes/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"1",
+						"dishes",
+						"2"
 					]
 				}
 			},

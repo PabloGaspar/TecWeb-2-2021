@@ -8,10 +8,10 @@ namespace RestaurantAPI.Services
 {
     public interface IDishService
     {
-        IEnumerable<DishModel> Getdishes(int restaurantId);
-        DishModel Getdish(int restaurantId, int dishId);
-        DishModel CreateDish(int restaurantId, DishModel dish);
-        void DeleteDish(int restaurantId, int dishId);
-        DishModel UpdateDish(int restaurantId, int dishId, DishModel dish);
+        Task<IEnumerable<DishModel>> GetdishesAsync(int restaurantId);
+        Task<DishModel> GetdishAsync(int restaurantId, int dishId);
+        Task<DishModel> CreateDishAsync(int restaurantId, DishModel dish);
+        Task DeleteDishAsync(int restaurantId, int dishId);
+        Task<DishModel> UpdateDishAsync(int restaurantId, int dishId, DishModel dish);
     }
 }

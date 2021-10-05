@@ -1,4 +1,5 @@
-﻿using RestaurantAPI.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantAPI.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,121 +9,137 @@ namespace RestaurantAPI.Data.Repository
 {
     public class RestaurantRepository : IRestaurantRepository
     {
-        private IList<RestaurantEntity> _restaurants;
-        private IList<DishEntity> _dishes = new List<DishEntity>();
+        private RestaurantDBContext _dbContext;
 
-        public RestaurantRepository()
+        public RestaurantRepository(RestaurantDBContext dbContext)
         {
-            _restaurants = new List<RestaurantEntity>();
-            _restaurants.Add(new RestaurantEntity()
+            _dbContext = dbContext;
+        }
+
+        //https://docs.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
+
+        public void CreateDish(int restaurantId, DishEntity dish)
+        {
+            _dbContext.Entry(dish.Restaurant).State = EntityState.Unchanged;
+            _dbContext.Dishes.Add(dish);
+        }
+
+        public void CreateRestaurant(RestaurantEntity restaurant)
+        {
+            _dbContext.Restaurants.Add(restaurant);
+        }
+
+        public async Task DeleteDishAsync(int restaurantId, int dishId)
+        {
+            var dishToDelete =  await _dbContext.Dishes.FirstOrDefaultAsync(d => d.Restaurant.Id == restaurantId && d.Id == dishId);
+            _dbContext.Dishes.Remove(dishToDelete);
+        }
+
+        public async Task DeleteRestaurantAsync(int restaurantId)
+        {
+            var restaurantToDelete = await _dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            //_dbContext.Entry(restaurantToDelete).State = EntityState.Deleted;
+
+            _dbContext.Restaurants.Remove(restaurantToDelete);
+        }
+
+        public async Task<DishEntity> GetdishAsync(int restaurantId, int dishId)
+        {
+            IQueryable<DishEntity> query = _dbContext.Dishes;
+            //query = query.Include(d => d.Restaurant);
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(d => d.Id == dishId && d.Restaurant.Id == restaurantId);
+        }
+
+        public async Task<IEnumerable<DishEntity>> GetdishesAsync(int restaurantId)
+        {
+            IQueryable<DishEntity> query = _dbContext.Dishes;
+            query = query.AsNoTracking();
+            query =  query.Where(d => d.Restaurant.Id == restaurantId);
+            return await query.ToListAsync();
+        }
+
+        public async Task<RestaurantEntity> GetRestaurantAsync(int restaurantId, bool showRestaurant = false)
+        {
+            IQueryable<RestaurantEntity> query = _dbContext.Restaurants;
+            query = query.AsNoTracking();
+            if (showRestaurant)
             {
-                Id = 1,
-                Name = "Panchita",
-                Address = "La Cancha",
-                Phone = "6665555444",
-                Founded = new DateTime(1991, 8, 12)
-            });
+                query = query.Include(r => r.Dishes);
+            }
 
-            _restaurants.Add(new RestaurantEntity()
+            return await query.FirstOrDefaultAsync(r => r.Id == restaurantId);
+        }
+
+        public async Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy)
+        {
+
+            IQueryable<RestaurantEntity> query = _dbContext.Restaurants;
+            query = query.AsNoTracking();
+
+            switch (orderBy.ToLower())
             {
-                Id = 2,
-                Name = "Overtime",
-                Address = "Prado",
-                Phone = "666555111",
-                Founded = new DateTime(2001, 9, 10)
-            });
+                case "id":
+                    query = query.OrderBy(r => r.Id);
+                    break;
+                case "name":
+                    query = query.OrderBy(r => r.Name);
+                    break;
+                case "address":
+                    query = query.OrderBy(r => r.Address);
+                    break;
+                default:
+                    query = query.OrderBy(r => r.Id);
+                    break;
+            }
 
+            //query = query.Where()
 
-            _dishes.Add(new DishEntity()
+            var result = await query.ToListAsync();
+
+            return result;
+             
+            //hit to database
+            //tolist()
+            //toArray()
+            //foreach
+            //firstOfDefaul
+            //Single
+            //Count
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            try
             {
-                Id = 1, 
-                Name = "Panchicono",
-                Price = 25.50m,
-                ToDeliver = false,
-                RestaurantId = 1
-            });
-
-            _dishes.Add(new DishEntity()
+                var result = await _dbContext.SaveChangesAsync();
+                return result > 0? true: false;
+                
+            }
+            catch (Exception ex)
             {
-                Id = 2,
-                Name = "Alitas",
-                Price = 30.30m,
-                ToDeliver = true,
-                RestaurantId = 1
-            });
-
-            _dishes.Add(new DishEntity()
-            {
-                Id = 3,
-                Name = "BBQ Pizza",
-                Price = 28.30m,
-                ToDeliver = true,
-                RestaurantId = 2
-            });
-
-            _dishes.Add(new DishEntity()
-            {
-                Id = 4,
-                Name = "Tropical Pizza",
-                Price = 35.30m,
-                ToDeliver = true,
-                RestaurantId = 2
-            });
+                throw ex;
+            }
         }
 
-
-        public DishEntity CreateDish(int restaurantId, DishEntity dish)
+        public async Task UpdateDishAsync(int restaurantId, int dishId, DishEntity dish)
         {
-            throw new NotImplementedException();
+            var dishToUpdate = await _dbContext.Dishes.FirstOrDefaultAsync(d => d.Id == dishId && d.Restaurant.Id == restaurantId);
+            dishToUpdate.Name = dish.Name ?? dishToUpdate.Name;
+            dishToUpdate.Price = dish.Price ?? dishToUpdate.Price;
+            dishToUpdate.CanBeDelivered = dish.CanBeDelivered ?? dishToUpdate.CanBeDelivered;
         }
 
-        public RestaurantEntity CreateRestaurant(RestaurantEntity restaurant)
+        public async Task UpdateRestaurantAsync(int restaurantId, RestaurantEntity restaurant)
         {
-            var lastRestaurant = _restaurants.OrderByDescending(r => r.Id).FirstOrDefault();
-            int nextId = lastRestaurant != null ? lastRestaurant.Id + 1 : 1;
-            restaurant.Id = nextId;
-            _restaurants.Add(restaurant);
-            return lastRestaurant;
-        }
+            //_dbContext.Entry(restaurant).State = EntityState.Modified;
 
-        public void DeleteDish(int restaurantId, int dishId)
-        {
-            throw new NotImplementedException();
-        }
+            var restaurantToUpdate = await _dbContext.Restaurants.FirstAsync(r => r.Id == restaurantId);
 
-        public void DeleteRestaurant(int restaurantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DishEntity Getdish(int restaurantId, int dishId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DishEntity> Getdishes(int restaurantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RestaurantEntity GetRestaurant(int restaurantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<RestaurantEntity> GetRestaurants(string orderBy)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DishEntity UpdateDish(int restaurantId, int dishId, DishEntity dish)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RestaurantEntity UpdateRestaurant(int restaurantId, RestaurantEntity restaurant)
-        {
-            throw new NotImplementedException();
+            restaurantToUpdate.Name = restaurant.Name ?? restaurantToUpdate.Name;
+            restaurantToUpdate.Address = restaurant.Address ?? restaurantToUpdate.Address;
+            restaurantToUpdate.Founded = restaurant.Founded ?? restaurantToUpdate.Founded;
+            restaurantToUpdate.Phone = restaurant.Phone ?? restaurantToUpdate.Phone;
         }
     }
 }

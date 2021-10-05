@@ -1,4 +1,6 @@
-﻿using RestaurantAPI.Data.Repository;
+﻿using AutoMapper;
+using RestaurantAPI.Data.Entities;
+using RestaurantAPI.Data.Repository;
 using RestaurantAPI.Exceptions;
 using RestaurantAPI.Models;
 using System;
@@ -12,72 +14,72 @@ namespace RestaurantAPI.Services
     {
 
         private IRestaurantRepository _restaurantRepository;
+        private IMapper _mapper;
 
-        public RestaurantService(IRestaurantRepository restaurantRepository)
+        public RestaurantService(IRestaurantRepository restaurantRepository, IMapper mapper)
         {
             _restaurantRepository = restaurantRepository;
+            _mapper = mapper;
         }
 
         private HashSet<string> _allowedSortValues = new HashSet<string> { "id", "name", "address" };
         
 
-        public RestaurantModel CreateRestaurant(RestaurantModel restaurant)
+        public async Task<RestaurantModel> CreateRestaurantAsync(RestaurantModel restaurant)
         {
-            
-            
-            return restaurant;
+            var restaurantEntity = _mapper.Map<RestaurantEntity>(restaurant);
+             _restaurantRepository.CreateRestaurant(restaurantEntity);
+            var result = await _restaurantRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<RestaurantModel>(restaurantEntity);
+            }
+
+            throw new Exception("Database Error.");
         }
 
-        public void DeleteRestaurant(int restaurantId)
+        public async Task DeleteRestaurantAsync(int restaurantId)
         {
-            var restaurantToDelete = _restaurants.SingleOrDefault(r => r.Id == restaurantId);
-            if (restaurantToDelete == null)
-                throw new NotFoundElementException($"the restaurant with id:{restaurantId} does not exists.");
-
-            _restaurants.Remove(restaurantToDelete);
+            await GetRestaurantAsync(restaurantId);
+            await _restaurantRepository.DeleteRestaurantAsync(restaurantId);
+            var result = await _restaurantRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Database Error.");
+            }
         }
 
-        public ResponseModel<RestaurantModel> GetRestaurant(int restaurantId)
+        public async Task<RestaurantModel> GetRestaurantAsync(int restaurantId, bool showRestaurant = false)
         {
-            var restaurant = _restaurants.FirstOrDefault(r => r.Id == restaurantId);
+            var restaurant = await _restaurantRepository.GetRestaurantAsync(restaurantId, showRestaurant);
 
             if (restaurant == null)
-                return new ResponseModel<RestaurantModel>() { isSuccess = false, Errors = new List<string>() { "somethin  happened", "id does not exist" }, ErrorType = ErrorResponseType.NotFound };
-                //return restaurant;
-            return new ResponseModel<RestaurantModel>() { isSuccess = true, Value = restaurant };
-            //throw new NotFoundElementException($"the restaurant with id:{restaurantId} does not exists.");
+                throw new NotFoundElementException($"the restaurant with id:{restaurantId} does not exists.");
+            
+            return _mapper.Map<RestaurantModel> (restaurant);
         }
 
-        public IEnumerable<RestaurantModel> GetRestaurants(string orderBy = "id")
+        public async Task<IEnumerable<RestaurantModel>> GetRestaurantsAsync(string orderBy = "id")
         {
             if (!_allowedSortValues.Contains(orderBy.ToLower()))
                 throw new InvalidElementOperationException($"invalid orderBy value : {orderBy}. The allowed values for param are: {string.Join(',', _allowedSortValues)}");
 
-            switch (orderBy.ToLower())
-            {
-                case "id":
-                    return _restaurants.OrderBy(r => r.Id);
-                case "name":
-                    return _restaurants.OrderBy(r => r.Name);
-                case "address":
-                    return _restaurants.OrderBy(r => r.Address);
-                default:
-                    return _restaurants.OrderBy(r => r.Id);
-            }
+            var restaurantEntityList =  await _restaurantRepository.GetRestaurantsAsync(orderBy);
+            return _mapper.Map<IEnumerable<RestaurantModel>>(restaurantEntityList);
         }
 
-        public RestaurantModel UpdateRestaurant(int restaurantId, RestaurantModel restaurant)
+        public async Task<RestaurantModel> UpdateRestaurantAsync(int restaurantId, RestaurantModel restaurant)
         {
-            var restaurantToUpdate = _restaurants.SingleOrDefault(r => r.Id == restaurantId);
-            if (restaurantToUpdate == null)
-                throw new NotFoundElementException($"the restaurant with id:{restaurantId} does not exists.");
+            await GetRestaurantAsync(restaurantId);
+            var restaurantEntity = _mapper.Map<RestaurantEntity>(restaurant);
+            await _restaurantRepository.UpdateRestaurantAsync(restaurantId, restaurantEntity);
+            var result = await _restaurantRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<RestaurantModel>(restaurantEntity);
+            }
 
-            restaurantToUpdate.Name = restaurant.Name ?? restaurantToUpdate.Name;
-            restaurantToUpdate.Address = restaurant.Address ?? restaurantToUpdate.Address;
-            restaurantToUpdate.Founded = restaurant.Founded ?? restaurantToUpdate.Founded;
-            restaurantToUpdate.Phone = restaurant.Phone ?? restaurantToUpdate.Phone;
-
-            return restaurantToUpdate;
+            throw new Exception("Database Error.");
         }
     }
 }

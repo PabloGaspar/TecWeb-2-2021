@@ -9,18 +9,20 @@ namespace RestaurantAPI.Data.Repository
     public interface IRestaurantRepository
     {
         //Restaurants
-        IEnumerable<RestaurantEntity> GetRestaurants(string orderBy);
-        RestaurantEntity GetRestaurant(int restaurantId);
-        RestaurantEntity CreateRestaurant(RestaurantEntity restaurant);
-        RestaurantEntity UpdateRestaurant(int restaurantId, RestaurantEntity restaurant);
-        void DeleteRestaurant(int restaurantId);
+        Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy);
+        Task<RestaurantEntity> GetRestaurantAsync (int restaurantId, bool showRestaurant = false);
+        void CreateRestaurant(RestaurantEntity restaurant);
+        Task UpdateRestaurantAsync(int restaurantId, RestaurantEntity restaurant);
+        Task DeleteRestaurantAsync(int restaurantId);
 
 
         //Dishes
-        IEnumerable<DishEntity> Getdishes(int restaurantId);
-        DishEntity Getdish(int restaurantId, int dishId);
-        DishEntity CreateDish(int restaurantId, DishEntity dish);
-        void DeleteDish(int restaurantId, int dishId);
-        DishEntity UpdateDish(int restaurantId, int dishId, DishEntity dish);
+        Task<IEnumerable<DishEntity>> GetdishesAsync(int restaurantId);
+        Task<DishEntity> GetdishAsync(int restaurantId, int dishId);
+        void CreateDish(int restaurantId, DishEntity dish);
+        Task DeleteDishAsync(int restaurantId, int dishId);
+        Task UpdateDishAsync(int restaurantId, int dishId, DishEntity dish);
+
+        Task<bool> SaveChangesAsync();
     }
 }
