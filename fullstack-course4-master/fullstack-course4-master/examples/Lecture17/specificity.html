@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inheritance in CSS</title>
+<style>
+header.navigation p { /*0 0 1 2*/
+  color: blue;
+}
+p.blurb{ /*0 0 1 1 */
+  color: red;
+}
+p {    /* 0 0 0 1*/
+  color: green !important;
+}
+#myp{  /*0100*/
+  color:aqua; 
+}
+
+
+</style>
+</head>
+<body>
+<header class="navigation">
+  <p style="color: cadetblue;" id="myp"class="blurb">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero soluta enim aut! Nihil nam obcaecati, fugiat sint sit libero voluptate eos incidunt odio neque cum, dignissimos aperiam, magnam nisi debitis.</p>
+</header>
+</body>
+</html>

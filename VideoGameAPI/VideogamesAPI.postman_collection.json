@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "cde8d57b-ba0e-42ae-80cb-854f6eb06fda",
+		"name": "VideogamesAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetCompanies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Imdhc3BhckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjJkMDQxN2U1LTU1YjMtNGExNC1hYWQ0LWU0ZmRlY2UyYjE1ZiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNjAyMDM5NTI5LCJpc3MiOiJodHRwOi8vdGVjd2ViLm5ldCIsImF1ZCI6Imh0dHA6Ly90ZWN3ZWIubmV0In0.frxGoWIupDiSPnLl6TUa5i2W0V8MpgoKFVPV10TzqjY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompany",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/2?showVideogames=false",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"2"
+					],
+					"query": [
+						{
+							"key": "showVideogames",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCompany",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sega\",\r\n    \"country\": \"Jp\",\r\n    \"fundationDate\": \"1979-12-12\",\r\n    \"ceo\": \"None\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/companies",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCompany",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/3",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCompany",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"country\": \"japan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/2",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVideogame",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/1/videogames/3",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"1",
+						"videogames",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVideogame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Smash Bross\",\r\n    \"esrb\": \"T\",\r\n    \"genre\": \"fighting\",\r\n    \"releaseDate\": \"2018-12-10T00:00:00\",\r\n    \"price\": 65.9,\r\n    \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/1/videogames",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"1",
+						"videogames"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVideogames",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/1/videogames",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"1",
+						"videogames"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteVideogame",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/2/videogames/3",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"2",
+						"videogames",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateVideogame",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": 80.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/companies/2/videogames/3",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"companies",
+						"2",
+						"videogames",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"gaspar@gmail.com\",\r\n    \"Password\": \"Gas!23\",\r\n    \"ConfirmPassword\": \"Gas!23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/auth/User",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Admin\",\r\n    \"NormalizedName\": \"Admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/auth/role",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrateUserRole",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserId\": \"2d0417e5-55b3-4a14-aad4-e4fdece2b15f\",\r\n    \"RoleId\": \"767eda7e-bcb5-4b67-ba32-d4cf8d8e2fc2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/auth/UserRole",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"UserRole"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"gaspar@gmail.com\",\r\n    \"Password\": \"Gas!23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostAPI}}/api/auth/Login",
+					"host": [
+						"{{hostAPI}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

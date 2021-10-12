@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>SURVEY</h1>
+    <form action="https://formspree.io/f/mrgrgnay" method="post">
+        <label for="name_input">Name</label>
+        <input type="text" name="name_input_name" id="name_input" placeholder="put your name here" maxlength="15" required> <!--value="PEPITO"--> <br>
+        <br>
+        <label for="email_input">Emai</label>
+        <input type="email" name="email_input_name" id="email_input">
+        <br>
+        <label for="message_input">Message</label>
+        <textarea name="message_input_name" id="message_input" cols="30" rows="10"></textarea>
+        <br>
+        
+        <p>Choose your State</p>
+        <input type="radio" name="state_name" id="state_cochabamba" value="Cochabamba" >
+        <label for="state_cochabamba">Cochabamba LABEL</label>
+        <input type="radio" name="state_name" id="state_lapaz" value="La Paz" checked>
+        <label for="state_lapaz">La Paz</label>
+        <input type="radio" name="state_name" id="state_santacruz" value="Santa Cruz">
+        <label for="state_santacruz">Santa Cruz</label>
+        <br>
+
+        <p>What languages do you know</p>
+        <input type="checkbox" name="programming_name" id="programming_java" value="JAVA">
+        <label for="programming_java">java</label>
+        <input type="checkbox" name="programming_name" id="programming_csharp" value="csharp" checked>
+        <label for="programming_csharp">c#</label>
+        <input type="checkbox" name="programming_name" id="programming_python" value="PYTHON">
+        <label for="programming_python">python</label>
+        <br>
+        <p>how happy you are</p>
+        <label for="score-id">Score</label>
+        <input name="Score" type="range" min="10" max="100" value="40" id="score-id" step="10">
+
+        <br>
+
+        <label for="videgame_preference">choose yor favorite videogame</label>
+        <select name="videgame_preference_name" id="videgame_preference">
+            <option value="SMASH BROSS">smash bross</option>
+            <option value="MONSTER HUNTER" selected>monster hunter</option>
+            <option value="ZELDA">zelda</option>
+        </select>
+        <br>
+        <input type="submit" value="SUBMIT">
+    </form>
+</body>
+</html>
