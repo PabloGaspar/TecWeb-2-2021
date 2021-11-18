@@ -7,7 +7,3 @@ johnGreeter.sayHi();
   var age = 33;
   console.log("Hello " + name);
 })("Coursera!");
-
-
-
-

@@ -15,4 +15,6 @@ function makeMultiplier (multiplier) {
 }
 
 var doubleAll = makeMultiplier(2);
+var tripleleAll = makeMultiplier(3);
 console.log(doubleAll(10)); // its own exec env
+console.log(tripleleAll(10));

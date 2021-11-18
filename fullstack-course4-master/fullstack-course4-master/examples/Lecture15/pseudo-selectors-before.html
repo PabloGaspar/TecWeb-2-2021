@@ -4,14 +4,16 @@
 <meta charset="utf-8">
 <title>Pseudo Class Selectors</title>
 <style>
-/* Styles go here. */
+
 header li {
   list-style: none;
 }
+
 h1{
   border-color: rgb(236, 42, 42);
   border-width: 14px 2px 10px 6px;
   border-style: solid dashed;
+  /*border: 5px solid red; short hand*/ 
 }
 
 a:link, a:visited{
@@ -19,11 +21,13 @@ a:link, a:visited{
   background-color: green;
   border-top: 2px solid rgb(170, 40, 0);
   color: purple;
-  display:block;
+  display: block;
+  /* visibility:hidden;*/
   width: 200px;
   text-align: center;
   margin-bottom: 1px;
 }
+
 
 a:hover, a:active{
   background-color: royalblue;
@@ -33,7 +37,7 @@ a:hover, a:active{
 a:active{
   background-color: rgb(170, 40, 0);
   color:yellow;
-}
+} 
 
 input[type=text] {
   background-color: skyblue;
@@ -54,6 +58,13 @@ section div:nth-child(odd){
 
 section div:nth-child(4):hover{
   background-color: rgb(36, 97, 134);
+}
+
+.tooltip:hover::after {
+  content: "Its a super market";
+  background-color: yellow;
+  color: red;
+  font-weight: bold;
 }
 
 </style>
@@ -97,6 +108,9 @@ section div:nth-child(4):hover{
   <div>DIV 19</div>
   <div>DIV 20</div>
 </section>
+
+
+<div class="tooltip">Ic Norte</div>
 
 </body>
 </html>

@@ -6,7 +6,7 @@ var a = function () {
 }
 
 function b() {
-  var messageInsideB = "im in B";
+  //var messageInsideB = "im in B";
   console.log("b: message = " + message);
 }
 

@@ -31,7 +31,7 @@ class Car {
   get nameFormated(){
     return `SUPERNAME: ${this.name}`; 
   }
-
+ 
   calculateAge() {
     return  new Date().getFullYear() - this.date.getFullYear();
   }
@@ -67,7 +67,7 @@ class Truck extends Car{
 
   showPrettyModel(prefix){
     super.showPrettyModel();
-    console.log(`and I have ${this.model} wheels`);
+    console.log(`and I have ${this.wheelsNumber} wheels`);
   }
 
 }

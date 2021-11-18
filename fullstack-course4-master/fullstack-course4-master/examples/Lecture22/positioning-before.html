@@ -1,62 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Positioning Elements</title>
-<style>
 
-* {
+<head>
+  <meta charset="utf-8">
+  <title>Positioning Elements</title>
+  <style>
+    * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-h1 {
-  margin-bottom: 15px;
-}
+    h1 {
+      margin-bottom: 15px;
+    }
 
-div#container {
-  background-color: #00FFFF;
-  position: relative;
-  top:50px
-}
-p {
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
-  text-align: center;
- 
-}
-#p1 {
-  background-color:rgba(233, 33, 33, 0.8);
-  
-}
-#p2 {
+    div#container {
+      background-color: #00FFFF;
+      position: relative;
+      top:50px;
+      left: 20px;
+    }
 
-  background-color: #DEB887;
-}
-#p3 {
-  background-color: #5F9EA0;
-  position: absolute;
-  top:0px;
-  left:50px
-}
-#p4 {
-  background-color: #FF7F50;
- 
-}
+    p {
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+      text-align: center;
+    }
 
-</style>
+    #p1 {
+      background-color: rgba(233, 33, 33, 0.8);
+
+    }
+
+    #p2 {
+      background-color: #DEB887;
+    }
+
+    #p3 {
+      background-color: #5F9EA0;
+
+      position: absolute;
+      top: 0px;
+      left: 80px;
+    }
+
+    #p4 {
+      background-color: #FF7F50;
+
+    }
+  </style>
 </head>
-<body>
-<h1>Positioning Elements</h1>
 
-<div id="container">
-  <p id="p1">1</p>
-  <p id="p2">2</p>
-  <p id="p3">3</p>
-  <p id="p4">4</p>
-</div>
+<body>
+  <h1>Positioning Elements</h1>
+
+  <div id="container">
+    <p id="p1">1</p>
+    <p id="p2">2</p>
+    <p id="p3">3</p>
+    <p id="p4">4</p>
+  </div>
 
 </body>
+
 </html>
