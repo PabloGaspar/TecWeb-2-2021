@@ -43,8 +43,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   /*document.querySelector("#classButton")
     .addEventListener("click", myFunction);*/
 
-    document.querySelector("#sayIt")
-    .addEventListener("click", sayHello);
+  document.querySelector("#sayIt").addEventListener("click", sayHello);
 
   document.querySelector("body").addEventListener("mousemove", function (event) {
     if (event.shiftKey === true) {

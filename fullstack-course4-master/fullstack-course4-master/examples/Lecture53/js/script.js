@@ -4,11 +4,30 @@
 // var p = document.querySelector(".divClass p");
 //var ps = document.querySelectorAll(".divClass p");
 
+function sayHello(eventName, otherValue){
 
-function sayHello (eventName, otherValue) {
-  debugger;
   var name = document.getElementById("name").value;
   var message = `<h1>Hello ${name}</h1>`;
+  document.getElementById("content").innerHTML = message;
+
+  if (name === "student") {
+    var title = 
+      document
+        .querySelector("#title")
+        .textContent;
+    title += " & Lovin' it!";
+    document
+        .querySelector("h1")
+        .textContent = title;
+  }
+}
+
+
+
+/*
+function sayHello (eventName, otherValue) {
+  debugger;
+ 
 
   // document
   //   .getElementById("content")
@@ -29,4 +48,4 @@ function sayHello (eventName, otherValue) {
         .querySelector("h1")
         .textContent = title;
   }
-}
+}*/
