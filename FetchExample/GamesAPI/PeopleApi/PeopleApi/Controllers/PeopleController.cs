@@ -11,13 +11,14 @@ namespace PeopleApi.Controllers
     [Route("api/[controller]")]
     public class PeopleController : Controller
     {
+
+        private List<Person> people = new List<Person> { new Person() { Age = 22, Name = "Pedro" }, new Person() { Age = 33, Name = "Ana" } };
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<Person>> Get()
         {
             try
             {
-                var people = new Person[] { new Person() { Age = 22, Name = "Pedro" }, new Person() { Age = 33, Name = "Ana" } };
                 //throw new Exception("backend died");
                 return Ok(people);
             }
@@ -42,8 +43,9 @@ namespace PeopleApi.Controllers
         {
             try
             {
-                //return Created("new", value);
-                throw new Exception("from backend");
+                people.Add(value);
+                return Created("new", value);
+                //throw new Exception("from backend");
             }
             catch (Exception ex)
             {

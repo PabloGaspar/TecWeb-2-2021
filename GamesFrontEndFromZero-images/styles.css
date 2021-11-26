@@ -1,0 +1,27 @@
+#teams-container
+{
+    background-color: rgb(73, 167, 167);
+    border: chartreuse;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+}
+
+#teams-container > div
+{
+    background-color: rgb(211, 107, 23);
+    border: rgb(116, 4, 221) solid;
+    box-shadow: 10px 10px black;
+    color: azure;
+    width: 200px;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+.roundImage
+{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
